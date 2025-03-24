@@ -28,6 +28,9 @@ build: codegen lint
 	rm -f $(BIN_DIR)/beraborrow
 	go build -o $(BIN_DIR)/beraborrow -v -ldflags \
 		"-X main.rev=$(version) -X main.bts=$(timestamp)" cmd/test/beraborrow/main.go
+	rm -f $(BIN_DIR)/moby
+	go build -o $(BIN_DIR)/moby -v -ldflags \
+		"-X main.rev=$(version) -X main.bts=$(timestamp)" cmd/test/moby/main.go
 
 lint:
 	golangci-lint run
@@ -46,3 +49,5 @@ codegen:
 	abigen --abi assets/abis/4626.abi --pkg sc --type ERC4626 --out internal/sc/erc_4626.go
 	abigen --abi assets/abis/beraborrowiw.abi --pkg sc --type BeraBorrowIW --out internal/sc/beraborrow_iw.go
 	abigen --abi assets/abis/beraborrowcicv.abi --pkg sc --type BeraBorrowCICV --out internal/sc/beraborrow_cicv.go
+	abigen --abi assets/abis/mobyolp.abi --pkg sc --type MobyOLP --out internal/sc/moby_olp.go
+	abigen --abi assets/abis/mobyolpmanager.abi --pkg sc --type MobyOLPManager --out internal/sc/moby_olp_manager.go
